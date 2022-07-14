@@ -4,6 +4,7 @@ import bm.app.minihrsap.model.Employee;
 import bm.app.minihrsap.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -29,5 +30,15 @@ public class EmployeeController {
     @GetMapping("/employees")
     public List<Employee> getEmployees() {
         return employeeService.getEmployees();
+    }
+
+    /**
+     * The id within the path is mapped to a parameter by the PathVariable annotation. The parameters
+     * in the path are required by default. If id was optional and was not provided, the above method
+     * would be used to handle the request.
+     */
+    @GetMapping("/employees/{id}")
+    public Employee getEmployee(@PathVariable Long id) {
+        return employeeService.getEmployee(id);
     }
 }
