@@ -23,6 +23,8 @@ public class EmployeeController {
 
     /**
      * In REST API resources are marked with nouns in the plural form.
+     * The below service returns a database entity. It can be done if what's in the entity can be
+     * represented in the service. Though usually they should be mapped to a DTO.
      */
     @GetMapping("/employees")
     public List<Employee> getEmployees() {
