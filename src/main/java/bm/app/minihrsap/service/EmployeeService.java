@@ -5,7 +5,6 @@ import bm.app.minihrsap.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,4 +25,11 @@ public class EmployeeService {
         return (Employee) employeeRepository.findById(id).orElseThrow();
     }
 
+    public Employee createEmployee(Employee employee) {
+        return (Employee) employeeRepository.save(employee);
+    }
+
+    public Employee updateEmployee(Employee employee) {
+        return (Employee) employeeRepository.save(employee);
+    }
 }

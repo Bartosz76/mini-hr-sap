@@ -3,9 +3,7 @@ package bm.app.minihrsap.controller;
 import bm.app.minihrsap.model.Employee;
 import bm.app.minihrsap.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +38,25 @@ public class EmployeeController {
     @GetMapping("/employees/{id}")
     public Employee getEmployee(@PathVariable Long id) {
         return employeeService.getEmployee(id);
+    }
+
+    /**
+     * RequestBody annotation means that when my application receives a HTTP request with something
+     * inside it so if there's a JSON in body that fits my object Spring will automatically
+     * convert that JSON to that object.
+     */
+    @PostMapping("/employees")
+    public Employee createEmployee(@RequestBody Employee employee) {
+        return employeeService.createEmployee(employee);
+    }
+
+    /**
+     * There are two ids available here. If a DTO was used, there would be no problem, because
+     * it would just not have the id. If there's no DTO I can overwrite the id field in the
+     * entity with the id coming in from the path.
+     */
+    @PutMapping("/employees/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        return employeeService.updateEmployee(employee);
     }
 }
