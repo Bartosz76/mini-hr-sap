@@ -74,4 +74,9 @@ public class EmployeeController {
                 employeeDto.getCreated()
         ));
     }
+
+    @DeleteMapping("/employees/{id}")
+    public void deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployee(id);
+    }
 }
