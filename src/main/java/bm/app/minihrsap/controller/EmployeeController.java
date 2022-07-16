@@ -1,6 +1,7 @@
 package bm.app.minihrsap.controller;
 
 import bm.app.minihrsap.model.Employee;
+import bm.app.minihrsap.model.EmployeeDto;
 import bm.app.minihrsap.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeController {
 
+    public static final Long EMPTY_ID = null; //For entity-dto mapping to provide instead of null.
     private EmployeeService employeeService;
 
     /**
@@ -44,10 +46,17 @@ public class EmployeeController {
      * RequestBody annotation means that when my application receives a HTTP request with something
      * inside it so if there's a JSON in body that fits my object Spring will automatically
      * convert that JSON to that object.
+     * A mapping from Dto is being performed upon the creation of the Employee.
      */
     @PostMapping("/employees")
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+    public Employee createEmployee(@RequestBody EmployeeDto employeeDto) {
+        return employeeService.createEmployee(new Employee(
+                EMPTY_ID,
+                employeeDto.getFirstName(),
+                employeeDto.getLastName(),
+                employeeDto.isActive(),
+                employeeDto.getCreated()
+        ));
     }
 
     /**
@@ -56,7 +65,13 @@ public class EmployeeController {
      * entity with the id coming in from the path.
      */
     @PutMapping("/employees/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-        return employeeService.updateEmployee(employee);
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+        return employeeService.updateEmployee(new Employee(
+                EMPTY_ID,
+                employeeDto.getFirstName(),
+                employeeDto.getLastName(),
+                employeeDto.isActive(),
+                employeeDto.getCreated()
+        ));
     }
 }
